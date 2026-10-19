@@ -175,24 +175,23 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 </div></section>
 
 <section id="research"><div class="wrap">
-  <div class="section-head"><h2>What I work on</h2><div class="note">Three threads, one question: when is a model's decision trustworthy?</div></div>
+  <div class="section-head"><h2>What I work on</h2><div class="note">Trustworthy Machine Learning and LLM Personalization</div></div>
   <div class="works">
     <div class="work">
       <a class="work-fig" href="papers/accurate-fairness.html"><img src="figures/af_overview.png" alt="Accurate fairness: two similar loan applicants and the four outcomes Accurate Fair, Accurate Bias, Inaccurate Fair, Inaccurate Bias"></a>
-      <div class="work-text"><h3>Accuracy and individual fairness</h3>
-        <p>A fair model that is wrong is not useful, and an accurate one that is biased is not trustworthy. <em>Accurate fairness</em> asks a model to treat an individual and all of their similar counterparts according to the individual's ground truth. A Siamese training scheme optimises it, and a fairness confusion matrix measures it.</p>
+      <div class="work-text"><h3>Accurate Fairness: Aligning Individual Fairness with Accuracy via Siamese In-Processing</h3>
+        <p>A fair model without accuracy is impractical; an accurate model without fairness is untrustworthy. We introduce accurate fairness—aligning the treatment of similar individuals with ground-truth targets—optimized through a Siamese in-processing scheme and measured via a fairness confusion matrix.</p>
         <a class="more" href="papers/accurate-fairness.html">AAAI-23 paper →</a></div>
     </div>
     <div class="work">
       <a class="work-fig" href="papers/rifair.html"><img src="figures/rif_quadrants.png" alt="The robustness–fairness relationship: Robust Fair, Robust Biased, Unrobust Fair and Unrobust Biased"></a>
-      <div class="work-text"><h3>Robustness meets fairness</h3>
-        <p>One harmless edit to a sentence can break a prediction and make two similar people get different answers. <em>Robust individual fairness</em> requires both to hold at once, and RIFair, a black-box attack, finds the robust-but-biased and fair-but-wrong cases that single-axis evaluations miss.</p>
-        <a class="more" href="papers/rifair.html">KDD '26 paper →</a></div>
+      <div class="work-text"><h3>RIF: Characterizing Both Robustness and Individual Fairness under Semantic Preserving Perturbations</h3>
+        <p>Adversarial edits can simultaneously compromise neural network reliability and equity. A robust model without fairness is biased; a fair model without robustness is fragile. We introduce Robust Individual Fairness (RIF)—aligning invariance across similar individuals with robustness against semantic perturbations—and develop RIFair, a black-box attack using decoupled perturbations to reveal failure modes missed by single-axis evaluations.</p>        <a class="more" href="papers/rifair.html">KDD '26 paper →</a></div>
     </div>
     <div class="work">
       <a class="work-fig" href="papers/llm-personalization.html"><img src="figures/cq_regions.png" alt="Acceptance regions of four evaluation paradigms for personalised responses"></a>
-      <div class="work-text"><h3>Evaluating LLM personalization</h3>
-        <p>Did the model follow the user's preferences without drifting from the task? I turn preferences and references into semantic constraints, audit the constraints so they are neither over- nor under-specified, and verify responses with natural language inference instead of a costly LLM judge.</p>
+      <div class="work-text"><h3>Audit-Based, Constraint-Driven LLM Personalized Evaluation</h3>
+        <p>Over-constraining personalization evaluation falsely rejects valid outputs; under-constraining it falsely accepts misaligned ones. We introduce ConQual-Audit, a audit-based, constraint-driven LLM personalized evaluation, which extracts semantic constraints from profiles and references, qualifies them through pruning and recovery, and verifies candidate responses via natural language inference to achieve reliable evaluation.</p>
         <a class="more" href="papers/llm-personalization.html">Preprint and code →</a></div>
     </div>
   </div>
