@@ -166,15 +166,15 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
   <div class="buttons"><a class="btn primary" href="https://doi.org/10.1145/3770855.3817848">DOI</a><a class="btn" href="https://arxiv.org/abs/2404.01356">arXiv</a><a class="btn" href="https://github.com/Xuran-LI/RIFair">Code</a></div>
 </div></section>
 <section><div class="wrap prose">
-<p><strong>In one sentence.</strong> A small, meaning-preserving edit can break a prediction (robustness) and make two similar people get different answers (individual fairness); existing evaluations check these one at a time and miss the cases where only one breaks. <em>Robust Individual Fairness</em> (RIF) requires both, and <em>RIFair</em> is a black-box attack that finds the sentence pairs violating it.</p>
+<p><strong>In one sentence.</strong> A small, meaning-preserving edit can either break a prediction (robustness) or make two similar people get different answers (individual fairness); existing evaluations check them separately and miss the cases where only one breaks the other maintain. <em>Robust Individual Fairness</em> (RIF) is a unified notion that jointly characterizes robustness and individual fairness under semanticpreserving perturbations, and <em>RIFair</em> is a black-box framework with a decoupled substitution strategy that exposes robustness and fairness violations induced by superficial lexical variation.</p>
 
 <h2>The robustness–fairness relationship</h2>
 <figure><img src="../figures/rif_quadrants.png" alt="Robust Fair satisfies RIF. Robust Biased is accepted by robustness-only evaluations, Unrobust Fair by fairness-only evaluations; Unrobust Biased is the worst case."><figcaption>Robust Fair satisfies RIF. Robust Biased is accepted by robustness-only evaluations, Unrobust Fair by fairness-only evaluations; Unrobust Biased is the worst case.</figcaption></figure>
-<figure><img src="../figures/rif_examples.png" alt="Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on each side (talk → discuss / chat) trigger each failure mode."><figcaption>Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on each side (talk → discuss / chat) trigger each failure mode.</figcaption></figure>
+<figure><img src="../figures/rif_examples.png" alt="Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on each side (talk → discuss / chat) trigger each failure mode."><figcaption>Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on the similar counterparts (talk → discuss / chat) trigger different failure modes.</figcaption></figure>
 
-<h2>Robust Individual Fairness</h2>
+<h2>Robust Individual Fairness (RIF)</h2>
 <p>Similar instances and admissible perturbations are defined by <em>semantic equivalence</em>, operationalised as bidirectional entailment from an NLI model, rather than by geometric proximity. A classifier satisfies ε-RIF on an instance if, for every similar counterpart and every admissible edit, the prediction error stays within ε:</p>
-<figure class="eq"><img src="../figures/rif_eq_definition.png" alt="The RIF definition."><figcaption>The RIF definition.</figcaption></figure>
+<figure class="eq"><img src="../figures/rif_eq_definition.png" alt="The RIF definition."></figure>
 <figure><img src="../figures/rif_relationship.png" alt="RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides."><figcaption>RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides.</figcaption></figure>
 
 <h2>RIFair</h2>
