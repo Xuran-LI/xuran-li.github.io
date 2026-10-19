@@ -175,7 +175,7 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 <h2>Robust Individual Fairness (RIF)</h2>
 <p>Similar instances and admissible perturbations are defined by <em>semantic equivalence</em>, operationalised as bidirectional entailment from an NLI model, rather than by geometric proximity. A classifier satisfies ε-RIF on an instance if, for every similar counterpart and every admissible edit, the prediction error stays within ε:</p>
 <figure class="eq"><img src="../figures/rif_eq_definition.png" alt="The RIF definition."></figure>
-<figure><img src="../figures/rif_relationship.png" alt="RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides."><figcaption>RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides.</figcaption></figure>
+<figure><img src="../figures/rif_relationship.png" alt="Relationship with robustness and individual fairness: RIF implies robustness and 2ε individual fairness; robustness plus Lipschitz fairness implies only a relaxed RIF."><figcaption>RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides.</figcaption></figure>
 
 <h2>RIFair</h2>
 <p>RIFair builds similar pairs by masking sensitive tokens, constructs a meaning-preserving perturbation space with a Generate–Filter pipeline, ranks tokens by occlusion saliency, and searches <em>decoupled</em> substitutions on the two sides of a pair to minimise a signed objective whose sign pattern selects the target quadrant.</p>
