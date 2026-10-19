@@ -57,7 +57,7 @@ h3{font-size:1.25rem}
 .hero-text{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:18px}
 .hero h1{font-size:clamp(2.4rem,1.6rem + 1.7vw,4.2rem)}
 .lede{font-family:var(--serif);font-style:italic;font-size:1.55rem;line-height:1.4;max-width:620px}
-.bio{max-width:120ch;margin:0;color:var(--muted);font-size:1.15rem;line-height:1.6}
+.bio{margin:0;color:var(--muted);font-size:1.15rem;line-height:1.6}
 .bio + .bio{margin-top:-4px}
 .buttons{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:4px;font-weight:600;text-decoration:none;border:1px solid var(--rule);color:var(--fg)}
@@ -76,13 +76,14 @@ section .wrap{padding-block:clamp(40px,4vw,72px) clamp(32px,3vw,56px)}
 .work-fig{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:16/10;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
 .work-fig img{display:block;width:100%;height:100%;object-fit:contain;padding:12px}
 .work-text{min-width:0;display:flex;flex-direction:column;gap:12px}
-.work-text h3{font-size:clamp(1.3rem,1.1rem + 0.5vw,1.8rem)}
+.work-text h3{font-size:clamp(1.3rem,1.1rem + 0.5vw,1.8rem);text-wrap:wrap;text-align:justify;text-justify:inter-word}
 .work-text p{margin:0;color:var(--muted)}
 .work-text .more{font-weight:600;text-decoration:none}
-/* news (same column template and gap as the code cards, so both grids line up) */
-.news-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 28px}
+/* news: one item per line */
+.news-list{display:grid;grid-template-columns:1fr;gap:14px}
 .news-list .item{display:flex;gap:14px;line-height:1.5;min-width:0}
-.news-list .date{flex:0 0 72px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+.nowrap{white-space:nowrap}
+.news-list .date{flex:0 0 4em;white-space:nowrap;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
 /* publications */
 .pubs{display:flex;flex-direction:column}
 .pub{display:flex;flex-wrap:wrap;gap:8px 20px;padding:18px 0;border-top:1px solid var(--rule)}
@@ -96,7 +97,8 @@ section .wrap{padding-block:clamp(40px,4vw,72px) clamp(32px,3vw,56px)}
 .pub .venue{color:var(--muted);font-style:italic}
 .pub .links{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.95rem;font-weight:600}
 .me{font-weight:700;color:var(--fg)}
-.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid currentColor;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid currentColor;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle;font-style:normal;line-height:1.4}
+.rank{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.04em;color:var(--muted);background:var(--band);border:1px solid var(--rule);border-radius:3px;padding:1px 7px;margin-left:8px;vertical-align:middle;font-style:normal;line-height:1.4;white-space:nowrap}
 /* projects */
 .projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 .project{border:1px solid var(--rule);border-radius:6px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -133,9 +135,9 @@ figcaption{margin-top:10px;color:var(--soft);font-size:.95rem;line-height:1.45}
 pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;overflow-x:auto;font-size:.88rem;line-height:1.5}
 .back{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none}
 .note-box{border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);margin:16px 0}
-@media (max-width:1100px){.news-list,.projects{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1100px){.projects{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.work{grid-template-columns:1fr;padding:22px 0}.work:nth-child(even) .work-fig{order:0}}
-@media (max-width:700px){.news-list,.projects{grid-template-columns:1fr}}
+@media (max-width:700px){.projects{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -174,13 +176,13 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
       <a class="work-fig" href="papers/accurate-fairness.html"><img src="figures/af_overview.png" alt="Accurate fairness: two similar loan applicants and the four outcomes Accurate Fair, Accurate Bias, Inaccurate Fair, Inaccurate Bias"></a>
       <div class="work-text"><h3>Accurate Fairness: Aligning Individual Fairness with Accuracy via Siamese In-Processing</h3>
         <p>A fair model without accuracy is impractical; an accurate model without fairness is untrustworthy. We introduce accurate fairness—aligning the treatment of similar individuals with ground-truth targets—optimized through a Siamese in-processing scheme and measured via a fairness confusion matrix.</p>
-        <a class="more" href="papers/accurate-fairness.html">AAAI-23 paper →</a></div>
+        <a class="more" href="papers/accurate-fairness.html">AAAI 2023 paper →</a></div>
     </div>
     <div class="work">
       <a class="work-fig" href="papers/rifair.html"><img src="figures/rif_quadrants.png" alt="The robustness–fairness relationship: Robust Fair, Robust Biased, Unrobust Fair and Unrobust Biased"></a>
       <div class="work-text"><h3>RIF: Characterizing Both Robustness and Individual Fairness under Semantic Preserving Perturbations</h3>
         <p>Adversarial edits can simultaneously compromise neural network reliability and equity. A robust model without fairness is biased; a fair model without robustness is fragile. We introduce Robust Individual Fairness (RIF)—aligning invariance across similar individuals with robustness against semantic perturbations—and develop RIFair, a black-box attack using decoupled perturbations to reveal failure modes missed by single-axis evaluations.</p>
-        <a class="more" href="papers/rifair.html">KDD '26 paper →</a></div>
+        <a class="more" href="papers/rifair.html">KDD 2026 paper →</a></div>
     </div>
     <div class="work">
       <a class="work-fig" href="papers/llm-personalization.html"><img src="figures/cq_regions.png" alt="Acceptance regions of four evaluation paradigms for personalised responses"></a>
@@ -194,10 +196,10 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 <section id="news"><div class="wrap">
   <div class="section-head"><h2>News</h2></div>
   <div class="news-list">
-    <div class="item"><div class="date">2026</div><div><em>Perturbation Effects on Robustness and Individual Fairness</em> accepted at KDD '26 (Jeju Island, August 2026).</div></div>
-    <div class="item"><div class="date">Jun 2026</div><div>New preprint on evaluating LLM personalization with semantic constraint verification (<a href="https://arxiv.org/abs/2606.16368">arXiv:2606.16368</a>).</div></div>
-    <div class="item"><div class="date">2026</div><div>TOSEM article on interpreting neural networks through activation–deactivation abstractions published.</div></div>
-    <div class="item"><div class="date">Feb 2023</div><div>Presented <em>Accurate Fairness</em> at AAAI-23 in Washington, DC.</div></div>
+    <div class="item"><div class="date">2026</div><div><em>Perturbation Effects on Robustness and Individual Fairness</em> accepted at KDD 2026 for <strong>oral presentation</strong> (Jeju Island, Korea, <span class="nowrap">August 2026). <span class="tag">Oral</span></span></div></div>
+    <div class="item"><div class="date">2026</div><div>New preprint on evaluating LLM personalization with semantic constraint verification (<a href="https://arxiv.org/abs/2606.16368">arXiv:2606.16368</a>).</div></div>
+    <div class="item"><div class="date">2025</div><div><em>Interpreting Deep Neural Networks via Relative Activation-Deactivation Abstractions</em> accepted by ACM TOSEM.</div></div>
+    <div class="item"><div class="date">2023</div><div><em>Accurate Fairness: Improving Individual Fairness without Trading Accuracy</em> accepted at AAAI 2023 for <strong>poster presentation</strong> (Washington, DC, <span class="nowrap">February 2023). <span class="tag">Poster</span></span></div></div>
   </div>
 </div></section>
 
@@ -206,17 +208,17 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
   <div class="pubs"><div class="pub"><div class="year">2026</div><div class="body">
   <div class="title"><a href="papers/rifair.html">Perturbation Effects on Robustness and Individual Fairness</a><span class="tag">first author</span></div>
   <div class="authors"><span class=me>Xuran Li</span>, Hao Xue, Peng Wu, Xingjun Ma, Zhen Zhang, Huaming Chen, Flora D. Salim</div>
-  <div class="venue">Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD '26)</div>
+  <div class="venue">Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD 2026)<span class="rank">CCF A</span><span class="rank">CORE A*</span><span class="rank">Oral</span></div>
   <div class="links"><a href="papers/rifair.html">Project page</a><a href="https://doi.org/10.1145/3770855.3817848">DOI</a><a href="https://arxiv.org/abs/2404.01356">arXiv</a><a href="https://github.com/Xuran-LI/RIFair">Code</a></div>
 </div></div><div class="pub"><div class="year">2026</div><div class="body">
   <div class="title"><a href="papers/llm-personalization.html">Evaluating LLM Personalization via Semantic Constraint Verification</a><span class="tag">first author</span></div>
   <div class="authors"><span class=me>Xuran Li</span>, Guanqin Zhang, Imran Razzak, Hakim Hacid, Eleanna Kafeza, Hao Xue, Flora D. Salim</div>
   <div class="venue">arXiv preprint arXiv:2606.16368</div>
   <div class="links"><a href="papers/llm-personalization.html">Project page</a><a href="https://arxiv.org/abs/2606.16368">arXiv</a><a href="https://github.com/Xuran-LI/ConQual-Audit">Code</a></div>
-</div></div><div class="pub"><div class="year">2026</div><div class="body">
+</div></div><div class="pub"><div class="year">2025</div><div class="body">
   <div class="title">Interpreting Deep Neural Networks via Relative Activation-Deactivation Abstractions</div>
   <div class="authors">Zhen Zhang, Peng Wu, Yuting Yang, <span class=me>Xuran Li</span></div>
-  <div class="venue">ACM Transactions on Software Engineering and Methodology, 35(7)</div>
+  <div class="venue">ACM Transactions on Software Engineering and Methodology (TOSEM 2025)<span class="rank">CCF A</span><span class="rank">CORE A*</span></div>
   <div class="links"><a href="https://doi.org/10.1145/3748503">DOI</a></div>
 </div></div><div class="pub"><div class="year">2023</div><div class="body">
   <div class="title"><a href="papers/robustfair.html">RobustFair: Adversarial Evaluation through Fairness Confusion Directed Gradient Search</a><span class="tag">first author</span></div>
@@ -226,12 +228,12 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 </div></div><div class="pub"><div class="year">2023</div><div class="body">
   <div class="title"><a href="papers/accurate-fairness.html">Accurate Fairness: Improving Individual Fairness without Trading Accuracy</a><span class="tag">first author</span></div>
   <div class="authors"><span class=me>Xuran Li</span>, Peng Wu, Jing Su</div>
-  <div class="venue">Proceedings of the 37th AAAI Conference on Artificial Intelligence (AAAI-23), 37(12), 14312–14320</div>
+  <div class="venue">Proceedings of the 37th AAAI Conference on Artificial Intelligence (AAAI 2023), 37(12), 14312–14320<span class="rank">CCF A</span><span class="rank">CORE A*</span><span class="rank">Poster</span></div>
   <div class="links"><a href="papers/accurate-fairness.html">Project page</a><a href="https://ojs.aaai.org/index.php/AAAI/article/view/26674">Paper</a><a href="https://arxiv.org/abs/2205.08704">arXiv</a><a href="https://github.com/Xuran-LI/AccurateFairnessCriterion">Code</a></div>
 </div></div><div class="pub"><div class="year">2022</div><div class="body">
   <div class="title">Adversarial Input Detection Based on Critical Transformation Robustness</div>
   <div class="authors">Jing Su, Zhen Zhang, Peng Wu, <span class=me>Xuran Li</span>, Jian Zhang</div>
-  <div class="venue">33rd IEEE International Symposium on Software Reliability Engineering (ISSRE 2022)</div>
+  <div class="venue">Proceedings of the 33rd IEEE International Symposium on Software Reliability Engineering (ISSRE 2022)<span class="rank">CCF B</span><span class="rank">CORE A</span></div>
   <div class="links"></div>
 </div></div></div>
 </div></section>
