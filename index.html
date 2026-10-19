@@ -13,6 +13,9 @@
   --accent:#1f3a93; --accent-ink:#ffffff; --panel:#1c2238; --panel-fg:#ffffff; --panel-muted:#d4d9ea; --panel-eyebrow:#a9b6e8;
   --photo:#e4e2dc; --link:#1f3a93;
   --serif:'Source Serif 4',Georgia,'Times New Roman',serif; --sans:'Source Sans 3','Helvetica Neue',Arial,sans-serif;
+  --fs-body:clamp(16px,11px + 0.55vw,20px); --fs-small:.92rem; --fs-tag:.74rem;
+  --fs-item:clamp(1.2rem,1.05rem + 0.35vw,1.45rem); --fs-section:clamp(1.55rem,1.2rem + 0.8vw,2.1rem);
+  --fs-name:clamp(2.3rem,1.5rem + 1.6vw,3.8rem); --fs-paper:clamp(1.6rem,1.2rem + 1vw,2.4rem);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -27,9 +30,9 @@
   --photo:#2a2f3a; --link:#9fb4f5; color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size:var(--fs-body)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:clamp(16px,11px + 0.55vw,21px);line-height:1.55}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:1rem;line-height:1.55}
 a{color:var(--link)}
 a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -37,9 +40,9 @@ img{max-width:100%;height:auto}
 p{text-align:justify;text-justify:inter-word;hyphens:auto}
 .wrap{max-width:min(94vw,1760px);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0;text-wrap:balance}
-h2{font-size:clamp(1.6rem,1.25rem + 0.8vw,2.3rem)}
-h3{font-size:1.25rem}
-.eyebrow{font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h2{font-size:var(--fs-section)}
+h3{font-size:var(--fs-item)}
+.eyebrow{font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 /* nav */
 .nav{border-bottom:1px solid var(--rule)}
 .nav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;padding-block:18px}
@@ -55,9 +58,9 @@ h3{font-size:1.25rem}
 .portrait img,.portrait .ph{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;border-radius:4px;background:var(--photo)}
 .portrait .ph{display:flex;align-items:center;justify-content:center;color:var(--soft);font-size:.95rem;text-align:center;padding:16px}
 .hero-text{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:18px}
-.hero h1{font-size:clamp(2.4rem,1.6rem + 1.7vw,4.2rem)}
+.hero h1{font-size:var(--fs-name)}
 .lede{font-family:var(--serif);font-style:italic;font-size:1.55rem;line-height:1.4;max-width:620px}
-.bio{margin:0;color:var(--muted);font-size:1.15rem;line-height:1.6}
+.bio{margin:0;color:var(--muted);font-size:1rem;line-height:1.6}
 .bio + .bio{margin-top:-4px}
 .buttons{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:4px;font-weight:600;text-decoration:none;border:1px solid var(--rule);color:var(--fg)}
@@ -66,7 +69,7 @@ h3{font-size:1.25rem}
 /* sections */
 section .wrap{padding-block:clamp(40px,4vw,72px) clamp(32px,3vw,56px)}
 .section-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:28px}
-.section-head .note{color:var(--soft);font-style:italic}
+.section-head .note{color:var(--soft);font-style:italic;font-size:var(--fs-small)}
 /* every row is the same two-column grid, so the figure and the text block have identical
    widths and edges in every row; even rows mirror the columns */
 .works{display:flex;flex-direction:column}
@@ -76,9 +79,10 @@ section .wrap{padding-block:clamp(40px,4vw,72px) clamp(32px,3vw,56px)}
 .work-fig{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:16/10;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
 .work-fig img{display:block;width:100%;height:100%;object-fit:contain;padding:12px}
 .work-text{min-width:0;display:flex;flex-direction:column;gap:12px}
-.work-text h3{font-size:clamp(1.3rem,1.1rem + 0.5vw,1.8rem);text-wrap:wrap;text-align:justify;text-justify:inter-word}
+.work-text h3{font-size:var(--fs-item);text-wrap:wrap;text-align:justify;text-justify:inter-word}
 .work-text p{margin:0;color:var(--muted)}
-.work-text .more{font-weight:600;text-decoration:none}
+.work-text .more{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:6px;padding-top:12px;border-top:1px solid var(--rule);font-weight:600;text-decoration:none}
+.work-text .more:hover span:first-child{text-decoration:underline;text-decoration-thickness:2px}
 /* news: one item per line */
 .news-list{display:grid;grid-template-columns:1fr;gap:14px}
 .news-list .item{display:flex;gap:14px;line-height:1.5;min-width:0}
@@ -88,46 +92,46 @@ section .wrap{padding-block:clamp(40px,4vw,72px) clamp(32px,3vw,56px)}
 .pubs{display:flex;flex-direction:column}
 .pub{display:flex;flex-wrap:wrap;gap:8px 20px;padding:18px 0;border-top:1px solid var(--rule)}
 .pub:last-child{border-bottom:1px solid var(--rule)}
-.pub .year{flex:0 0 56px;font-family:var(--serif);font-size:1.1rem;color:var(--soft);font-variant-numeric:tabular-nums}
+.pub .year{flex:0 0 56px;font-family:var(--serif);font-size:1rem;color:var(--soft);font-variant-numeric:tabular-nums}
 .pub .body{flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:4px}
-.pub .title{font-size:1.1rem;font-weight:600}
+.pub .title{font-size:1.05rem;font-weight:600}
 .pub .title a{color:var(--fg);text-decoration:none}
 .pub .title a:hover{color:var(--accent)}
 .pub .authors{color:var(--muted)}
 .pub .venue{color:var(--muted);font-style:italic}
-.pub .links{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.95rem;font-weight:600}
+.pub .links{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:var(--fs-small);font-weight:600}
 .me{font-weight:700;color:var(--fg)}
-.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid currentColor;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle;font-style:normal;line-height:1.4}
-.rank{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.04em;color:var(--muted);background:var(--band);border:1px solid var(--rule);border-radius:3px;padding:1px 7px;margin-left:8px;vertical-align:middle;font-style:normal;line-height:1.4;white-space:nowrap}
+.tag{display:inline-block;font-size:var(--fs-tag);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid currentColor;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle;font-style:normal;line-height:1.4}
+.rank{display:inline-block;font-size:var(--fs-tag);font-weight:600;letter-spacing:.04em;color:var(--muted);background:var(--band);border:1px solid var(--rule);border-radius:3px;padding:1px 7px;margin-left:8px;vertical-align:middle;font-style:normal;line-height:1.4;white-space:nowrap}
 /* projects */
 .projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 .project{border:1px solid var(--rule);border-radius:6px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .project h3 a{color:var(--fg);text-decoration:none}
 .project h3 a:hover{color:var(--accent)}
 .project p{margin:0;color:var(--muted)}
-.project .links{margin-top:auto;display:flex;flex-wrap:wrap;gap:4px 14px;font-weight:600;font-size:.95rem}
+.project .links{margin-top:auto;display:flex;flex-wrap:wrap;gap:4px 14px;font-weight:600;font-size:var(--fs-small)}
 /* footer */
 footer{background:var(--band);border-top:1px solid var(--rule)}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding-block:24px;color:var(--muted);font-size:.95rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding-block:24px;color:var(--muted);font-size:var(--fs-small)}
 footer .links{display:flex;flex-wrap:wrap;gap:18px}
 /* paper pages */
 .paper-head{background:var(--band)}
 .paper-head .wrap{padding-block:48px 40px;display:flex;flex-direction:column;gap:14px}
-.paper-head h1{font-size:clamp(1.7rem,1.3rem + 1.1vw,2.8rem)}
-.paper-head .authors{font-size:1.1rem}
+.paper-head h1{font-size:var(--fs-paper)}
+.paper-head .authors{font-size:1.05rem}
 .paper-head .venue{color:var(--muted);font-style:italic}
 .prose{max-width:min(100%,1120px)}
 .prose p,.prose ul,.prose h2{max-width:78ch}
 .prose p{margin:0 0 1em}
-.prose h2{font-size:clamp(1.4rem,1.15rem + 0.6vw,1.9rem);margin:48px 0 16px}
+.prose h2{font-size:var(--fs-item);margin:48px 0 16px}
 .prose ul{padding-left:1.2em;margin:0 0 1em}
 .prose li{margin-bottom:.4em}
 figure{margin:28px 0}
 figure img{display:block;width:100%;border:1px solid var(--rule);border-radius:4px;background:#fff}
-figcaption{margin-top:10px;color:var(--soft);font-size:.95rem;line-height:1.45}
+figcaption{margin-top:10px;color:var(--soft);font-size:var(--fs-small);line-height:1.45}
 .eq{margin:18px 0}
 .eq img{border:none;background:#fff;border-radius:4px}
-.kv{width:100%;border-collapse:collapse;font-size:.98rem;margin:12px 0 20px}
+.kv{width:100%;border-collapse:collapse;font-size:var(--fs-small);margin:12px 0 20px}
 .kv th,.kv td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 .kv th{font-weight:600;color:var(--muted)}
 .kv td.num{font-variant-numeric:tabular-nums;text-align:right}
@@ -176,19 +180,19 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
       <a class="work-fig" href="papers/accurate-fairness.html"><img src="figures/af_overview.png" alt="Accurate fairness: two similar loan applicants and the four outcomes Accurate Fair, Accurate Bias, Inaccurate Fair, Inaccurate Bias"></a>
       <div class="work-text"><h3>Accurate Fairness: Aligning Individual Fairness with Accuracy via Siamese In-Processing</h3>
         <p>A fair model without accuracy is impractical; an accurate model without fairness is untrustworthy. We introduce accurate fairness—aligning the treatment of similar individuals with ground-truth targets—optimized through a Siamese in-processing scheme and measured via a fairness confusion matrix.</p>
-        <a class="more" href="papers/accurate-fairness.html">AAAI 2023 paper →</a></div>
+        <a class="more" href="papers/accurate-fairness.html"><span>Read the AAAI 2023 paper</span><span aria-hidden="true">→</span></a></div>
     </div>
     <div class="work">
       <a class="work-fig" href="papers/rifair.html"><img src="figures/rif_quadrants.png" alt="The robustness–fairness relationship: Robust Fair, Robust Biased, Unrobust Fair and Unrobust Biased"></a>
       <div class="work-text"><h3>RIF: Characterizing Both Robustness and Individual Fairness under Semantic Preserving Perturbations</h3>
         <p>Adversarial edits can simultaneously compromise neural network reliability and equity. A robust model without fairness is biased; a fair model without robustness is fragile. We introduce Robust Individual Fairness (RIF)—aligning invariance across similar individuals with robustness against semantic perturbations—and develop RIFair, a black-box attack using decoupled perturbations to reveal failure modes missed by single-axis evaluations.</p>
-        <a class="more" href="papers/rifair.html">KDD 2026 paper →</a></div>
+        <a class="more" href="papers/rifair.html"><span>Read the KDD 2026 paper</span><span aria-hidden="true">→</span></a></div>
     </div>
     <div class="work">
       <a class="work-fig" href="papers/llm-personalization.html"><img src="figures/cq_regions.png" alt="Acceptance regions of four evaluation paradigms for personalised responses"></a>
       <div class="work-text"><h3>Audit-Based, Constraint-Driven LLM Personalized Evaluation</h3>
         <p>Over-constraining personalization evaluation falsely rejects valid outputs; under-constraining it falsely accepts misaligned ones. We introduce ConQual-Audit, an audit-based, constraint-driven framework that extracts semantic constraints from profiles and references, qualifies them through pruning and recovery, and verifies candidate responses via natural language inference to achieve reliable evaluation.</p>
-        <a class="more" href="papers/llm-personalization.html">Preprint and code →</a></div>
+        <a class="more" href="papers/llm-personalization.html"><span>Read the preprint and get the code</span><span aria-hidden="true">→</span></a></div>
     </div>
   </div>
 </div></section>
@@ -243,7 +247,7 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
   <div class="projects">
     <div class="project"><h3><a href="https://github.com/Xuran-LI/AccurateFairnessCriterion">AccurateFairnessCriterion</a></h3>
       <p>Siamese fairness in-processing and the fairness confusion matrix. Pre-trained baseline and Siamese models for Adult, German Credit, COMPAS and Ctrip, so the evaluation reproduces without training.</p>
-      <div class="links"><a href="https://github.com/Xuran-LI/AccurateFairnessCriterion">GitHub</a><a href="papers/accurate-fairness.html">Paper page</a><a href="https://www.aigovernance.online/fairnessevaluator/">Online evaluator</a></div></div>
+      <div class="links"><a href="https://github.com/Xuran-LI/AccurateFairnessCriterion">GitHub</a><a href="papers/accurate-fairness.html">Paper page</a></div></div>
     <div class="project"><h3><a href="https://github.com/Xuran-LI/RIFair">RIFair</a></h3>
       <p>Black-box adversarial framework for robust individual fairness in NLP: Generate–Filter perturbation space, query-based token ranking, decoupled search for RB / UF / UB pairs, and adversarial retraining.</p>
       <div class="links"><a href="https://github.com/Xuran-LI/RIFair">GitHub</a><a href="papers/rifair.html">Paper page</a></div></div>
