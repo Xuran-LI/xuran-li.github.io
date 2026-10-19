@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>RIFair</title>
+<meta name="description" content="KDD '26: Perturbation Effects on Robustness and Individual Fairness.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{
+  --bg:#ffffff; --band:#f6f5f1; --fg:#1c1c1c; --muted:#4a4f5c; --soft:#6b7080; --rule:#e3e3e3;
+  --accent:#1f3a93; --accent-ink:#ffffff; --panel:#1c2238; --panel-fg:#ffffff; --panel-muted:#d4d9ea; --panel-eyebrow:#a9b6e8;
+  --photo:#e4e2dc; --link:#1f3a93;
+  --serif:'Source Serif 4',Georgia,'Times New Roman',serif; --sans:'Source Sans 3','Helvetica Neue',Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171c; --band:#1b1e25; --fg:#ededed; --muted:#b9bdc8; --soft:#8e93a1; --rule:#2d313a;
+    --accent:#8ea6f0; --accent-ink:#0f1322; --panel:#242a3b; --panel-fg:#ffffff; --panel-muted:#d4d9ea; --panel-eyebrow:#a9b6e8;
+    --photo:#2a2f3a; --link:#9fb4f5; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171c; --band:#1b1e25; --fg:#ededed; --muted:#b9bdc8; --soft:#8e93a1; --rule:#2d313a;
+  --accent:#8ea6f0; --accent-ink:#0f1322; --panel:#242a3b; --panel-fg:#ffffff; --panel-muted:#d4d9ea; --panel-eyebrow:#a9b6e8;
+  --photo:#2a2f3a; --link:#9fb4f5; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:clamp(16px,11px + 0.55vw,21px);line-height:1.55}
+a{color:var(--link)}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+img{max-width:100%;height:auto}
+.wrap{max-width:min(94vw,1760px);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0;text-wrap:balance}
+h2{font-size:clamp(1.6rem,1.25rem + 0.8vw,2.3rem)}
+h3{font-size:1.25rem}
+.eyebrow{font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+/* nav */
+.nav{border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;padding-block:18px}
+.brand{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--fg);text-decoration:none;flex:1 1 200px}
+.nav nav{display:flex;flex-wrap:wrap;gap:8px 26px;font-weight:600}
+.nav nav a{text-decoration:none;color:var(--fg)}
+.nav nav a:hover{color:var(--accent)}
+/* hero */
+.hero{background:var(--band)}
+.hero .wrap{display:flex;flex-wrap:wrap;gap:40px clamp(40px,4vw,80px);align-items:center;padding-block:clamp(48px,5vw,88px) clamp(40px,4vw,72px)}
+.portrait{--pw:clamp(220px,17vw,380px);flex:0 0 var(--pw);width:var(--pw);height:calc(var(--pw) * 7 / 6);position:relative}
+.portrait::before{content:"";position:absolute;left:5%;top:4.3%;width:100%;height:100%;background:var(--accent);border-radius:4px}
+.portrait img,.portrait .ph{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;border-radius:4px;background:var(--photo)}
+.portrait .ph{display:flex;align-items:center;justify-content:center;color:var(--soft);font-size:.95rem;text-align:center;padding:16px}
+.hero-text{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.hero h1{font-size:clamp(2.4rem,1.6rem + 1.7vw,4.2rem)}
+.lede{font-family:var(--serif);font-style:italic;font-size:1.55rem;line-height:1.4;max-width:620px}
+.bio{max-width:70ch;margin:0;color:var(--muted);font-size:1.15rem;line-height:1.6}
+.bio + .bio{margin-top:-4px}
+.buttons{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:4px;font-weight:600;text-decoration:none;border:1px solid var(--rule);color:var(--fg)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:hover{border-color:var(--accent)}
+/* sections */
+section .wrap{padding-block:clamp(40px,4vw,72px) clamp(32px,3vw,56px)}
+.section-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:28px}
+.section-head .note{color:var(--soft);font-style:italic}
+.works{display:flex;flex-direction:column}
+.work{display:flex;flex-wrap:wrap;gap:28px clamp(32px,4vw,72px);align-items:center;padding:clamp(24px,2.5vw,40px) 0;border-top:1px solid var(--rule)}
+.work:last-child{border-bottom:1px solid var(--rule)}
+.work:nth-child(even){flex-direction:row-reverse}
+.work-fig{flex:1.15 1 min(420px,100%);min-width:0;display:block;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
+.work-fig img{display:block;width:100%}
+.work-text{flex:1 1 min(380px,100%);min-width:0;display:flex;flex-direction:column;gap:12px}
+.work-text h3{font-size:clamp(1.3rem,1.1rem + 0.5vw,1.8rem)}
+.work-text p{margin:0;color:var(--muted);max-width:62ch}
+.work-text .more{font-weight:600;text-decoration:none}
+/* news */
+.news-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:14px 48px}
+.news-list .item{display:flex;gap:14px;line-height:1.5;min-width:0}
+.news-list .date{flex:0 0 72px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+/* publications */
+.pubs{display:flex;flex-direction:column}
+.pub{display:flex;flex-wrap:wrap;gap:8px 20px;padding:18px 0;border-top:1px solid var(--rule)}
+.pub:last-child{border-bottom:1px solid var(--rule)}
+.pub .year{flex:0 0 56px;font-family:var(--serif);font-size:1.1rem;color:var(--soft);font-variant-numeric:tabular-nums}
+.pub .body{flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.pub .title{font-size:1.1rem;font-weight:600}
+.pub .title a{color:var(--fg);text-decoration:none}
+.pub .title a:hover{color:var(--accent)}
+.pub .authors{color:var(--muted)}
+.pub .venue{color:var(--muted);font-style:italic}
+.pub .links{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.95rem;font-weight:600}
+.me{font-weight:700;color:var(--fg)}
+.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid currentColor;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px}
+.project{border:1px solid var(--rule);border-radius:6px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.project h3 a{color:var(--fg);text-decoration:none}
+.project h3 a:hover{color:var(--accent)}
+.project p{margin:0;color:var(--muted)}
+.project .links{margin-top:auto;display:flex;flex-wrap:wrap;gap:4px 14px;font-weight:600;font-size:.95rem}
+/* footer */
+footer{background:var(--band);border-top:1px solid var(--rule)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding-block:24px;color:var(--muted);font-size:.95rem}
+footer .links{display:flex;flex-wrap:wrap;gap:18px}
+/* paper pages */
+.paper-head{background:var(--band)}
+.paper-head .wrap{padding-block:48px 40px;display:flex;flex-direction:column;gap:14px}
+.paper-head h1{font-size:clamp(1.7rem,1.3rem + 1.1vw,2.8rem)}
+.paper-head .authors{font-size:1.1rem}
+.paper-head .venue{color:var(--muted);font-style:italic}
+.prose{max-width:min(100%,1120px)}
+.prose p,.prose ul{max-width:78ch}
+.prose p{margin:0 0 1em}
+.prose h2{font-size:clamp(1.4rem,1.15rem + 0.6vw,1.9rem);margin:48px 0 16px}
+.prose ul{padding-left:1.2em;margin:0 0 1em}
+.prose li{margin-bottom:.4em}
+figure{margin:28px 0}
+figure img{display:block;width:100%;border:1px solid var(--rule);border-radius:4px;background:#fff}
+figcaption{margin-top:10px;color:var(--soft);font-size:.95rem;line-height:1.45}
+.eq{margin:18px 0}
+.eq img{border:none;background:#fff;border-radius:4px}
+.kv{width:100%;border-collapse:collapse;font-size:.98rem;margin:12px 0 20px}
+.kv th,.kv td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+.kv th{font-weight:600;color:var(--muted)}
+.kv td.num{font-variant-numeric:tabular-nums;text-align:right}
+.tablewrap{overflow-x:auto}
+pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;overflow-x:auto;font-size:.88rem;line-height:1.5}
+.back{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none}
+.note-box{border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);margin:16px 0}
+@media (max-width:860px){.work{padding:22px 0}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="../index.html">Xuran Li</a>
+  <nav aria-label="Site">
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#research">Research</a>
+    <a href="../index.html#publications">Publications</a>
+    <a href="../index.html#projects">Projects</a>
+    <a href="../files/Xuran_Li_CV.pdf">CV</a>
+    <a href="../index.html#contact">Contact</a>
+  </nav>
+</div></header>
+<section class="paper-head"><div class="wrap">
+  <a class="back" href="../index.html#publications">← All publications</a>
+  <h1>Perturbation Effects on Robustness and Individual Fairness</h1>
+  <div class="authors"><span class=me>Xuran Li</span>, Hao Xue, Peng Wu, Xingjun Ma, Zhen Zhang, Huaming Chen, Flora D. Salim</div>
+  <div class="venue">KDD '26 · Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining, Jeju Island, August 2026</div>
+  <div class="buttons"><a class="btn primary" href="https://doi.org/10.1145/3770855.3817848">DOI</a><a class="btn" href="https://arxiv.org/abs/2404.01356">arXiv</a><a class="btn" href="https://github.com/Xuran-LI/RIFair">Code</a></div>
+</div></section>
+<section><div class="wrap prose">
+<p><strong>In one sentence.</strong> A small, meaning-preserving edit can break a prediction (robustness) and make two similar people get different answers (individual fairness); existing evaluations check these one at a time and miss the cases where only one breaks. <em>Robust Individual Fairness</em> (RIF) requires both, and <em>RIFair</em> is a black-box attack that finds the sentence pairs violating it.</p>
+
+<h2>The robustness–fairness relationship</h2>
+<figure><img src="../figures/rif_quadrants.png" alt="Robust Fair satisfies RIF. Robust Biased is accepted by robustness-only evaluations, Unrobust Fair by fairness-only evaluations; Unrobust Biased is the worst case."><figcaption>Robust Fair satisfies RIF. Robust Biased is accepted by robustness-only evaluations, Unrobust Fair by fairness-only evaluations; Unrobust Biased is the worst case.</figcaption></figure>
+<figure><img src="../figures/rif_examples.png" alt="Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on each side (talk → discuss / chat) trigger each failure mode."><figcaption>Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on each side (talk → discuss / chat) trigger each failure mode.</figcaption></figure>
+
+<h2>Robust Individual Fairness</h2>
+<p>Similar instances and admissible perturbations are defined by <em>semantic equivalence</em>, operationalised as bidirectional entailment from an NLI model, rather than by geometric proximity. A classifier satisfies ε-RIF on an instance if, for every similar counterpart and every admissible edit, the prediction error stays within ε:</p>
+<figure class="eq"><img src="../figures/rif_eq_definition.png" alt="The RIF definition."><figcaption>The RIF definition.</figcaption></figure>
+<figure><img src="../figures/rif_relationship.png" alt="RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides."><figcaption>RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides.</figcaption></figure>
+
+<h2>RIFair</h2>
+<p>RIFair builds similar pairs by masking sensitive tokens, constructs a meaning-preserving perturbation space with a Generate–Filter pipeline, ranks tokens by occlusion saliency, and searches <em>decoupled</em> substitutions on the two sides of a pair to minimise a signed objective whose sign pattern selects the target quadrant.</p>
+<figure><img src="../figures/rif_generate_filter.png" alt="Generate–Filter: an LLM proposes raw candidates, an NLI discriminator keeps the semantically imperceptible ones."><figcaption>Generate–Filter: an LLM proposes raw candidates, an NLI discriminator keeps the semantically imperceptible ones.</figcaption></figure>
+<figure class="eq"><img src="../figures/rif_eq_objective.png" alt="The unified objective. +1 minimises a term, −1 maximises it; (α_v, α_v′, β) = (+1, −1, −1) targets Robust Biased, (−1, −1, +1) Unrobust Fair, (−1, +1, −1) Unrobust Biased."><figcaption>The unified objective. +1 minimises a term, −1 maximises it; (α_v, α_v′, β) = (+1, −1, −1) targets Robust Biased, (−1, −1, +1) Unrobust Fair, (−1, +1, −1) Unrobust Biased.</figcaption></figure>
+<figure><img src="../figures/rif_trajectories.png" alt="Prediction trajectories of a similar pair under the three objectives."><figcaption>Prediction trajectories of a similar pair under the three objectives.</figcaption></figure>
+
+<h2>Results</h2>
+<figure><img src="../figures/rif_results.png" alt="Resistance of four backbones under fairness, robustness and RIF evaluation. The order of the models changes with the axis."><figcaption>Resistance of four backbones under fairness, robustness and RIF evaluation. The order of the models changes with the axis.</figcaption></figure>
+<figure><img src="../figures/rif_sensitivity.png" alt="When RIFair targets one quadrant, robustness stays high under Robust Biased and fairness stays high under Unrobust Fair; RIF is lowest in every scenario."><figcaption>When RIFair targets one quadrant, robustness stays high under Robust Biased and fairness stays high under Unrobust Fair; RIF is lowest in every scenario.</figcaption></figure>
+<figure><img src="../figures/rif_defense.png" alt="Retraining with RIFair-generated pairs reduces every failure rate on Bias in Bios."><figcaption>Retraining with RIFair-generated pairs reduces every failure rate on Bias in Bios.</figcaption></figure>
+<p>Decoupled search exposes 2.3× more Robust Biased and 3.0× more Unrobust Biased violations than a coupled attack, and entailment-constrained pairs keep their meaning (S<sub>eq</sub> = 0.978, LLM-judge 4.60/5) where cosine-constrained ones drift.</p>
+
+<h2>Citation</h2>
+<pre>@inproceedings{li2026perturbation,
+  title     = {Perturbation Effects on Robustness and Individual Fairness},
+  author    = {Li, Xuran and Xue, Hao and Wu, Peng and Ma, Xingjun and Zhang, Zhen and Chen, Huaming and Salim, Flora D.},
+  booktitle = {Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2 (KDD '26)},
+  year      = {2026}, publisher = {ACM}, doi = {10.1145/3770855.3817848}
+}</pre>
+</div></section>
+
+<footer id="contact"><div class="wrap">
+  <div>xuran.li1@unsw.edu.au · CRUISE Lab, School of Computer Science and Engineering, UNSW Sydney</div>
+  <div class="links"><a href="https://scholar.google.com/citations?user=HFC-_xIAAAAJ">Google Scholar</a><a href="https://github.com/Xuran-LI">GitHub</a><a href="https://www.linkedin.com/">LinkedIn</a></div>
+</div></footer>
+</body>
+</html>

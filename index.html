@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Xuran Li</title>
-<meta name="description" content="Personal website of Xuran Li, PhD candidate at UNSW Sydney working on trustworthy machine learning.">
+<meta name="description" content="Personal website of Xuran Li, PhD candidate in the CRUISE Lab at UNSW Sydney working on trustworthy machine learning and LLM personalization.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
 :root{
@@ -29,14 +29,14 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.55}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:clamp(16px,11px + 0.55vw,21px);line-height:1.55}
 a{color:var(--link)}
 a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 img{max-width:100%;height:auto}
-.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:min(94vw,1760px);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15;margin:0;text-wrap:balance}
-h2{font-size:1.9rem}
+h2{font-size:clamp(1.6rem,1.25rem + 0.8vw,2.3rem)}
 h3{font-size:1.25rem}
 .eyebrow{font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 /* nav */
@@ -48,35 +48,36 @@ h3{font-size:1.25rem}
 .nav nav a:hover{color:var(--accent)}
 /* hero */
 .hero{background:var(--band)}
-.hero .wrap{display:flex;flex-wrap:wrap;gap:40px 56px;align-items:center;padding-block:64px 56px}
-.portrait{flex:0 0 240px;width:240px;height:280px;position:relative}
-.portrait::before{content:"";position:absolute;left:14px;top:14px;width:240px;height:280px;background:var(--accent);border-radius:4px}
-.portrait img,.portrait .ph{position:absolute;left:0;top:0;width:240px;height:280px;object-fit:cover;border-radius:4px;background:var(--photo)}
+.hero .wrap{display:flex;flex-wrap:wrap;gap:40px clamp(40px,4vw,80px);align-items:center;padding-block:clamp(48px,5vw,88px) clamp(40px,4vw,72px)}
+.portrait{--pw:clamp(220px,17vw,380px);flex:0 0 var(--pw);width:var(--pw);height:calc(var(--pw) * 7 / 6);position:relative}
+.portrait::before{content:"";position:absolute;left:5%;top:4.3%;width:100%;height:100%;background:var(--accent);border-radius:4px}
+.portrait img,.portrait .ph{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;border-radius:4px;background:var(--photo)}
 .portrait .ph{display:flex;align-items:center;justify-content:center;color:var(--soft);font-size:.95rem;text-align:center;padding:16px}
 .hero-text{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:18px}
-.hero h1{font-size:3rem}
+.hero h1{font-size:clamp(2.4rem,1.6rem + 1.7vw,4.2rem)}
 .lede{font-family:var(--serif);font-style:italic;font-size:1.55rem;line-height:1.4;max-width:620px}
-.bio{max-width:640px;color:var(--muted);font-size:1.18rem;line-height:1.6}
+.bio{max-width:70ch;margin:0;color:var(--muted);font-size:1.15rem;line-height:1.6}
+.bio + .bio{margin-top:-4px}
 .buttons{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:4px;font-weight:600;text-decoration:none;border:1px solid var(--rule);color:var(--fg)}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .btn:hover{border-color:var(--accent)}
 /* sections */
-section .wrap{padding-block:56px 48px}
+section .wrap{padding-block:clamp(40px,4vw,72px) clamp(32px,3vw,56px)}
 .section-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:28px}
 .section-head .note{color:var(--soft);font-style:italic}
 .works{display:flex;flex-direction:column}
-.work{display:flex;flex-wrap:wrap;gap:28px 44px;align-items:center;padding:30px 0;border-top:1px solid var(--rule)}
+.work{display:flex;flex-wrap:wrap;gap:28px clamp(32px,4vw,72px);align-items:center;padding:clamp(24px,2.5vw,40px) 0;border-top:1px solid var(--rule)}
 .work:last-child{border-bottom:1px solid var(--rule)}
 .work:nth-child(even){flex-direction:row-reverse}
-.work-fig{flex:1 1 380px;min-width:0;display:block;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
+.work-fig{flex:1.15 1 min(420px,100%);min-width:0;display:block;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
 .work-fig img{display:block;width:100%}
-.work-text{flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:12px}
-.work-text h3{font-size:1.45rem}
-.work-text p{margin:0;color:var(--muted)}
+.work-text{flex:1 1 min(380px,100%);min-width:0;display:flex;flex-direction:column;gap:12px}
+.work-text h3{font-size:clamp(1.3rem,1.1rem + 0.5vw,1.8rem)}
+.work-text p{margin:0;color:var(--muted);max-width:62ch}
 .work-text .more{font-weight:600;text-decoration:none}
 /* news */
-.news-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 48px}
+.news-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:14px 48px}
 .news-list .item{display:flex;gap:14px;line-height:1.5;min-width:0}
 .news-list .date{flex:0 0 72px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
 /* publications */
@@ -84,7 +85,7 @@ section .wrap{padding-block:56px 48px}
 .pub{display:flex;flex-wrap:wrap;gap:8px 20px;padding:18px 0;border-top:1px solid var(--rule)}
 .pub:last-child{border-bottom:1px solid var(--rule)}
 .pub .year{flex:0 0 56px;font-family:var(--serif);font-size:1.1rem;color:var(--soft);font-variant-numeric:tabular-nums}
-.pub .body{flex:1 1 400px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.pub .body{flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:4px}
 .pub .title{font-size:1.1rem;font-weight:600}
 .pub .title a{color:var(--fg);text-decoration:none}
 .pub .title a:hover{color:var(--accent)}
@@ -94,7 +95,7 @@ section .wrap{padding-block:56px 48px}
 .me{font-weight:700;color:var(--fg)}
 .tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid currentColor;border-radius:3px;padding:1px 6px;margin-left:6px;vertical-align:middle}
 /* projects */
-.projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px}
 .project{border:1px solid var(--rule);border-radius:6px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .project h3 a{color:var(--fg);text-decoration:none}
 .project h3 a:hover{color:var(--accent)}
@@ -107,12 +108,13 @@ footer .links{display:flex;flex-wrap:wrap;gap:18px}
 /* paper pages */
 .paper-head{background:var(--band)}
 .paper-head .wrap{padding-block:48px 40px;display:flex;flex-direction:column;gap:14px}
-.paper-head h1{font-size:2.3rem}
+.paper-head h1{font-size:clamp(1.7rem,1.3rem + 1.1vw,2.8rem)}
 .paper-head .authors{font-size:1.1rem}
 .paper-head .venue{color:var(--muted);font-style:italic}
-.prose{max-width:760px}
+.prose{max-width:min(100%,1120px)}
+.prose p,.prose ul{max-width:78ch}
 .prose p{margin:0 0 1em}
-.prose h2{font-size:1.6rem;margin:48px 0 16px}
+.prose h2{font-size:clamp(1.4rem,1.15rem + 0.6vw,1.9rem);margin:48px 0 16px}
 .prose ul{padding-left:1.2em;margin:0 0 1em}
 .prose li{margin-bottom:.4em}
 figure{margin:28px 0}
@@ -128,7 +130,7 @@ figcaption{margin-top:10px;color:var(--soft);font-size:.95rem;line-height:1.45}
 pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;overflow-x:auto;font-size:.88rem;line-height:1.5}
 .back{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none}
 .note-box{border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);margin:16px 0}
-@media (max-width:860px){.projects,.news-list{grid-template-columns:1fr}.hero h1{font-size:2.4rem}h2{font-size:1.6rem}.work{padding:22px 0}}
+@media (max-width:860px){.work{padding:22px 0}}
 </style>
 </head>
 <body>
@@ -147,9 +149,10 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 <section class="hero" id="about"><div class="wrap">
   <div class="portrait"><img src="assets/profile.jpg" alt="Xuran Li"></div>
   <div class="hero-text">
-    <div class="eyebrow">PhD Candidate · School of Computer Science and Engineering · UNSW Sydney</div>
+    <div class="eyebrow">PhD Candidate · CRUISE Lab · UNSW Sydney</div>
     <h1>Xuran Li</h1>
-    <p class="bio">I am a PhD candidate at UNSW Sydney, advised by Prof. Flora D. Salim and Dr. Hao Xue. Before UNSW I worked on trustworthy machine learning with Prof. Peng Wu at the Institute of Software, Chinese Academy of Sciences. My work spans individual fairness, adversarial robustness, and the evaluation of large language models.</p>
+    <p class="bio">I am a PhD candidate in the CRUISE Lab at UNSW Sydney, advised by Prof. Flora Salim and Prof. Hao Xue. My research asks when a model's decision can be trusted: whether it stays correct and consistent for similar individuals, survives harmless changes to the input, and, in a large language model, follows the user's preferences without drifting from the task. My current work evaluates and improves LLM personalization through semantic constraints.</p>
+    <p class="bio">Before UNSW, I did my master's in the State Key Laboratory of Computer Science, Institute of Software, Chinese Academy of Sciences, with Prof. Peng Wu and Prof. Jian Zhang, where I proposed accurate fairness (AAAI-23) and worked on adversarial input detection (ISSRE 2022, TOSEM 2025). I have also been a research assistant with Prof. Yi Zeng at the Institute of Automation, CAS, building the Accurate Fairness Evaluator for the AI Governance Online platform, and with Prof. Xingjun Ma in the FVL Lab at Fudan University, where the RIFair work (KDD '26) began.</p>
     <div class="buttons">
       <a class="btn primary" href="files/Xuran_Li_CV.pdf">Download CV</a>
       <a class="btn" href="https://scholar.google.com/citations?user=HFC-_xIAAAAJ">Google Scholar</a>
@@ -233,7 +236,7 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
   <div class="projects">
     <div class="project"><h3><a href="https://github.com/Xuran-LI/AccurateFairnessCriterion">AccurateFairnessCriterion</a></h3>
       <p>Siamese fairness in-processing and the fairness confusion matrix. Pre-trained baseline and Siamese models for Adult, German Credit, COMPAS and Ctrip, so the evaluation reproduces without training.</p>
-      <div class="links"><a href="https://github.com/Xuran-LI/AccurateFairnessCriterion">GitHub</a><a href="papers/accurate-fairness.html">Paper page</a></div></div>
+      <div class="links"><a href="https://github.com/Xuran-LI/AccurateFairnessCriterion">GitHub</a><a href="papers/accurate-fairness.html">Paper page</a><a href="https://www.aigovernance.online/fairnessevaluator/">Online evaluator</a></div></div>
     <div class="project"><h3><a href="https://github.com/Xuran-LI/RIFair">RIFair</a></h3>
       <p>Black-box adversarial framework for robust individual fairness in NLP: Generate–Filter perturbation space, query-based token ranking, decoupled search for RB / UF / UB pairs, and adversarial retraining.</p>
       <div class="links"><a href="https://github.com/Xuran-LI/RIFair">GitHub</a><a href="papers/rifair.html">Paper page</a></div></div>
@@ -244,7 +247,7 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 </div></section>
 
 <footer id="contact"><div class="wrap">
-  <div>xuran.li1@unsw.edu.au · School of Computer Science and Engineering, UNSW Sydney</div>
+  <div>xuran.li1@unsw.edu.au · CRUISE Lab, School of Computer Science and Engineering, UNSW Sydney</div>
   <div class="links"><a href="https://scholar.google.com/citations?user=HFC-_xIAAAAJ">Google Scholar</a><a href="https://github.com/Xuran-LI">GitHub</a><a href="https://www.linkedin.com/">LinkedIn</a></div>
 </div></footer>
 </body>
