@@ -209,26 +209,6 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 <h2>Results</h2>
 <p>Evaluators judge controlled positive responses (same meaning as the golden label) and negative responses (a different meaning). Across PrefEval and LaMP, ConQual-Audit outperforms nine baselines, attaining the top AUCs (0.88 and 0.90) and the lowest false rate (0.21) on the leanest constraint sets, at an amortisable audit cost. The constraint audit is also portable: integrating it into ExPerT and PREF revises their constraint sets into smaller, higher-quality ones and reduces their evaluation false rates.</p>
 
-<h2>Code</h2>
-<p><a href="https://github.com/Xuran-LI/ConQual-Audit">Xuran-LI/ConQual-Audit</a> contains the audit, the PrefEval and LaMP-1/2/4 benchmarks, the nine baselines, and the scripts that regenerate every table in the paper from the saved results (no GPU needed for the tables).</p>
-<pre>conqual/audit.py        ConQual-Audit: construction, qualification, verification, R / P / F1
-benchmarks/             PrefEval and LaMP-1/2/4 test sets, prompts, and the build scripts
-baselines/              BLEU-4 / ROUGE-L, BERTScore / MoverScore, GEMBA, FActScore, ExPerT, PREF, PerSE
-experiments/            run_conqual.py (ConQual-Audit on a benchmark), audit_baselines.py (ExPerT / PREF audited by ConQual)
-tables/                 the paper's tables from the saved results
-data/prefeval/          the PrefEval test responses used in the paper</pre>
-<p>Setup is <code>pip install -r requirements.txt</code> (Python ≥ 3.10); <code>bash scripts/run_prefeval.sh cuda:0</code> and <code>bash scripts/run_lamp.sh cuda:0</code> reproduce every run and table. To score one response:</p>
-<pre>from benchmarks import prefeval
-from conqual import ConQualAudit
-from utils.llm import load_model
-
-tokenizer, model = load_model("Qwen/Qwen3-8B", "cuda:0")
-audit = ConQualAudit(tokenizer, model, prefeval.CONQUAL_PROMPTS)
-metrics, verification, qualified, constructed = audit.evaluate(
-    query, response, reference,
-    user_profile=[{"preference": "I dislike team-building activities that involve physical sports."}])
-print(metrics["R"], metrics["P"], metrics["f1_score"])</pre>
-<p>For many responses to the same query, call <code>audit.build_constraints(...)</code> once and <code>audit.verify_constraints(...)</code> for each response.</p>
 
 <h2>Citation</h2>
 <pre>@article{li2026evaluating,
