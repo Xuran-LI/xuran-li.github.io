@@ -182,7 +182,11 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 <figure><img src="../figures/af_relationship.png" alt="Accurate fairness sits between accuracy and individual fairness and implies both (Theorem 1); it also implies statistical parity and confusion-matrix group fairness over the union of similar sub-populations (Theorems 2–3)."><figcaption>Accurate fairness sits between accuracy and individual fairness and implies both (Theorem 1); it also implies statistical parity and confusion-matrix group fairness over the union of similar sub-populations (Theorems 2–3).</figcaption></figure>
 
 <h2>Siamese fairness in-processing</h2>
-<p>Training under the accurate-fairness constraints becomes a max–min problem with one Lagrange multiplier per similar individual. A Siamese network is the natural optimiser: every member of a sub-population goes through a copy of the model with shared parameters, so the whole sub-population is treated uniformly in each back-propagation step.</p>
+<p>To improve the accurate fairness of a model, we train it under the accurate-fairness constraints:</p>
+<figure class="eq"><img src="../figures/af_eq_optimisation.png" alt="Minimise the training loss over all similar sub-populations subject to the accurate-fairness constraints."></figure>
+<p>By the Karush–Kuhn–Tucker conditions this is equivalent to a max–min problem with one Lagrange multiplier <code>λ<sub>ij</sub> ≥ 0</code> per similar individual:</p>
+<figure class="eq"><img src="../figures/af_eq_lagrangian.png" alt="Max–min Lagrangian form of the accurate-fairness optimisation."></figure>
+<p>A Siamese network is the natural optimiser: every member of a similar sub-population goes through a copy of the model with shared parameters <code>θ</code>, so the whole sub-population is treated uniformly in each back-propagation step.</p>
 <figure><img src="../figures/af_siamese.png" alt="Fair augmentation builds the similar sub-population; m parallel copies with shared parameters θ feed the accurate-fairness loss; gradient descent on θ and ascent on λ."><figcaption>Fair augmentation builds the similar sub-population; m parallel copies with shared parameters θ feed the accurate-fairness loss; gradient descent on θ and ascent on λ.</figcaption></figure>
 
 <h2>Fairness confusion matrix</h2>
