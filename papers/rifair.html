@@ -143,7 +143,7 @@ figcaption{margin-top:10px;color:var(--soft);font-size:var(--fs-small);line-heig
 code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--band);border:1px solid var(--rule);border-radius:3px;padding:0 5px}
 pre code{background:none;border:none;padding:0;font-size:inherit}
 pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;overflow-x:auto;font-size:.88rem;line-height:1.5}
-.back{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none}
+.back{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none;align-self:flex-start;text-align:left}
 .note-box{border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);margin:16px 0}
 @media (max-width:1100px){.projects{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.work{grid-template-columns:1fr;padding:22px 0}.work:nth-child(even) .work-fig{order:0}}
@@ -180,7 +180,7 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 <p>Perturbations and "similar individuals" are usually defined by geometric neighbourhoods (an <em>L<sub>p</sub></em> ball, cosine similarity). In NLP that proxy is unreliable: <em>China → Guangzhou</em> is close in embedding space yet changes the truth conditions of a sentence. We instead ground equivalence in truth-conditional semantics and operationalise it with <strong>bidirectional entailment</strong> from an NLI model:</p>
 <figure class="eq"><img src="../figures/rif_eq_semantic_equivalence.png" alt="S_eq(v, v′) = P(v ⊨ v′) · P(v′ ⊨ v); an edit is admissible iff S_eq(v, v′) ≥ τ_sem."></figure>
 <p>With this filter we define the two sets RIF quantifies over — the <strong>similar instances</strong> <code>I(v)</code> (equivalent once the sensitive tokens <code>𝒜</code> are masked by <code>M</code>) and the <strong>admissible perturbations</strong> <code>Δ<sub>adm</sub></code> (meaning-preserving token substitutions):</p>
-<figure class="eq"><img src="../figures/rif_eq_similar_and_admissible.png" alt="Definitions of the similar-instance set I(v) and the admissible perturbation set Δ_adm."></figure>
+<figure class="eq"><img src="../figures/rif_eq_sets.png" alt="Definitions of the similar-instance set I(v) and the admissible perturbation set Δ_adm."></figure>
 <p>Two assumptions make the ground truth usable as the target: <strong>A1 (label invariance)</strong> — admissible edits do not change <code>y</code>; <strong>A2 (semantic filter)</strong> — an edit is admissible only if it passes the bidirectional entailment check.</p>
 
 <h2>Robust Individual Fairness (RIF)</h2>
