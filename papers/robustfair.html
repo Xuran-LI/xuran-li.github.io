@@ -116,16 +116,18 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 
 footer .links{display:flex;flex-wrap:wrap;gap:18px}
 /* paper pages */
 .paper-head{background:var(--band)}
-.paper-head .wrap{padding-block:48px 40px;display:flex;flex-direction:column;gap:14px}
-.paper-head h1{font-size:var(--fs-paper);text-wrap:pretty;text-align:left}
+.paper-head .wrap{padding-block:48px 40px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.paper-head h1{font-size:var(--fs-paper);text-wrap:balance;text-align:center}
 .paper-head .authors{font-size:1.05rem}
 .paper-head .venue{color:var(--muted);font-style:italic}
+.paper-head .buttons{justify-content:center}
 body.paper .wrap{max-width:min(94vw,1152px)}
 .prose{max-width:none}
 .prose p,.prose ul,.prose h2{max-width:none}
-.prose li,figcaption,.paper-head .venue,.paper-head .authors,.news-list .item>div:last-child,.pub .venue,.pub .authors{text-align:justify;text-justify:inter-word;hyphens:auto}
+.prose li,figcaption,.news-list .item>div:last-child,.pub .venue,.pub .authors{text-align:justify;text-justify:inter-word;hyphens:auto}
+.paper-head .venue,.paper-head .authors{text-align:center;text-wrap:balance}
 .prose p{margin:0 0 1em}
-.prose h2{font-size:var(--fs-item);margin:48px 0 16px}
+.prose h2{font-size:var(--fs-item);margin:48px 0 16px;text-align:center;text-wrap:balance}
 .prose ul{padding-left:1.2em;margin:0 0 1em}
 .prose li{margin-bottom:.4em}
 figure{margin:28px 0}
@@ -138,6 +140,8 @@ figcaption{margin-top:10px;color:var(--soft);font-size:var(--fs-small);line-heig
 .kv th{font-weight:600;color:var(--muted)}
 .kv td.num{font-variant-numeric:tabular-nums;text-align:right}
 .tablewrap{overflow-x:auto}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--band);border:1px solid var(--rule);border-radius:3px;padding:0 5px}
+pre code{background:none;border:none;padding:0;font-size:inherit}
 pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;overflow-x:auto;font-size:.88rem;line-height:1.5}
 .back{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none}
 .note-box{border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);margin:16px 0}

@@ -116,16 +116,18 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 
 footer .links{display:flex;flex-wrap:wrap;gap:18px}
 /* paper pages */
 .paper-head{background:var(--band)}
-.paper-head .wrap{padding-block:48px 40px;display:flex;flex-direction:column;gap:14px}
-.paper-head h1{font-size:var(--fs-paper);text-wrap:pretty;text-align:left}
+.paper-head .wrap{padding-block:48px 40px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.paper-head h1{font-size:var(--fs-paper);text-wrap:balance;text-align:center}
 .paper-head .authors{font-size:1.05rem}
 .paper-head .venue{color:var(--muted);font-style:italic}
+.paper-head .buttons{justify-content:center}
 body.paper .wrap{max-width:min(94vw,1152px)}
 .prose{max-width:none}
 .prose p,.prose ul,.prose h2{max-width:none}
-.prose li,figcaption,.paper-head .venue,.paper-head .authors,.news-list .item>div:last-child,.pub .venue,.pub .authors{text-align:justify;text-justify:inter-word;hyphens:auto}
+.prose li,figcaption,.news-list .item>div:last-child,.pub .venue,.pub .authors{text-align:justify;text-justify:inter-word;hyphens:auto}
+.paper-head .venue,.paper-head .authors{text-align:center;text-wrap:balance}
 .prose p{margin:0 0 1em}
-.prose h2{font-size:var(--fs-item);margin:48px 0 16px}
+.prose h2{font-size:var(--fs-item);margin:48px 0 16px;text-align:center;text-wrap:balance}
 .prose ul{padding-left:1.2em;margin:0 0 1em}
 .prose li{margin-bottom:.4em}
 figure{margin:28px 0}
@@ -138,6 +140,8 @@ figcaption{margin-top:10px;color:var(--soft);font-size:var(--fs-small);line-heig
 .kv th{font-weight:600;color:var(--muted)}
 .kv td.num{font-variant-numeric:tabular-nums;text-align:right}
 .tablewrap{overflow-x:auto}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--band);border:1px solid var(--rule);border-radius:3px;padding:0 5px}
+pre code{background:none;border:none;padding:0;font-size:inherit}
 pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;overflow-x:auto;font-size:.88rem;line-height:1.5}
 .back{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none}
 .note-box{border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);margin:16px 0}
@@ -162,26 +166,33 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
   <a class="back" href="../index.html#publications">← All publications</a>
   <h1>Perturbation Effects on Robustness and Individual Fairness</h1>
   <div class="authors"><span class=me>Xuran Li</span>, Hao Xue, Peng Wu, Xingjun Ma, Zhen Zhang, Huaming Chen, Flora D. Salim</div>
-  <div class="venue">KDD '26 · Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining, Jeju Island, August 2026</div>
+  <div class="venue">KDD 2026 · Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining, Jeju Island, August 2026 · Oral</div>
   <div class="buttons"><a class="btn primary" href="https://doi.org/10.1145/3770855.3817848">DOI</a><a class="btn" href="https://arxiv.org/abs/2404.01356">arXiv</a><a class="btn" href="https://github.com/Xuran-LI/RIFair">Code</a></div>
 </div></section>
 <section><div class="wrap prose">
-<p><strong>In one sentence.</strong> A small, meaning-preserving edit can either break a prediction (robustness) or make two similar people get different answers (individual fairness); existing evaluations check them separately and miss the cases where only one breaks the other maintain. <em>Robust Individual Fairness</em> (RIF) is a unified notion that jointly characterizes robustness and individual fairness under semanticpreserving perturbations, and <em>RIFair</em> is a black-box framework with a decoupled substitution strategy that exposes robustness and fairness violations induced by superficial lexical variation.</p>
+<p><strong>In one sentence.</strong> A small, meaning-preserving edit can either break a prediction (robustness) or make two similar people get different answers (individual fairness); existing evaluations check the two separately and miss the cases where one breaks while the other holds. <em>Robust Individual Fairness</em> (RIF) is a unified notion that jointly characterizes robustness and individual fairness under semantic-preserving perturbations, and <em>RIFair</em> is a black-box framework whose decoupled substitution strategy exposes the robustness and fairness violations induced by superficial lexical variation.</p>
 
 <h2>The robustness–fairness relationship</h2>
 <figure><img src="../figures/rif_quadrants.png" alt="Robust Fair satisfies RIF. Robust Biased is accepted by robustness-only evaluations, Unrobust Fair by fairness-only evaluations; Unrobust Biased is the worst case."><figcaption>Robust Fair satisfies RIF. Robust Biased is accepted by robustness-only evaluations, Unrobust Fair by fairness-only evaluations; Unrobust Biased is the worst case.</figcaption></figure>
-<figure><img src="../figures/rif_examples.png" alt="Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on each side (talk → discuss / chat) trigger each failure mode."><figcaption>Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on the similar counterparts (talk → discuss / chat) trigger different failure modes.</figcaption></figure>
+<figure><img src="../figures/rif_examples.png" alt="Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on the similar counterparts (talk → discuss / chat) trigger different failure modes."><figcaption>Real pairs found by RIFair on Bias in Bios and SST-2. Different but equally admissible substitutions on the similar counterparts (talk → discuss / chat) trigger different failure modes.</figcaption></figure>
+
+<h2>Semantic equivalence, not geometric proximity</h2>
+<p>Perturbations and "similar individuals" are usually defined by geometric neighbourhoods (an <em>L<sub>p</sub></em> ball, cosine similarity). In NLP that proxy is unreliable: <em>China → Guangzhou</em> is close in embedding space yet changes the truth conditions of a sentence. We instead ground equivalence in truth-conditional semantics and operationalise it with <strong>bidirectional entailment</strong> from an NLI model:</p>
+<figure class="eq"><img src="../figures/rif_eq_semantic_equivalence.png" alt="S_eq(v, v′) = P(v ⊨ v′) · P(v′ ⊨ v); an edit is admissible iff S_eq(v, v′) ≥ τ_sem."></figure>
+<p>With this filter we define the two sets RIF quantifies over — the <strong>similar instances</strong> <code>I(v)</code> (equivalent once the sensitive tokens <code>𝒜</code> are masked by <code>M</code>) and the <strong>admissible perturbations</strong> <code>Δ<sub>adm</sub></code> (meaning-preserving token substitutions):</p>
+<figure class="eq"><img src="../figures/rif_eq_sets.png" alt="Definitions of the similar-instance set I(v) and the admissible perturbation set Δ_adm."></figure>
+<p>Two assumptions make the ground truth usable as the target: <strong>A1 (label invariance)</strong> — admissible edits do not change <code>y</code>; <strong>A2 (semantic filter)</strong> — an edit is admissible only if it passes the bidirectional entailment check.</p>
 
 <h2>Robust Individual Fairness (RIF)</h2>
-<p>Similar instances and admissible perturbations are defined by <em>semantic equivalence</em>, operationalised as bidirectional entailment from an NLI model, rather than by geometric proximity. A classifier satisfies ε-RIF on an instance if, for every similar counterpart and every admissible edit, the prediction error stays within ε:</p>
+<p>With the two sets in place, RIF is one inequality over both of them. A classifier satisfies ε-RIF on an instance <code>v</code> if, for every similar counterpart <code>v′ ∈ I(v)</code> and every admissible edit <code>δ ∈ Δ<sub>adm</sub></code>, the prediction error on both sides stays within ε of the ground truth:</p>
 <figure class="eq"><img src="../figures/rif_eq_definition.png" alt="The RIF definition."></figure>
-<figure><img src="../figures/rif_relationship.png" alt="Relationship with robustness and individual fairness: RIF implies robustness and 2ε individual fairness; robustness plus Lipschitz fairness implies only a relaxed RIF."><figcaption>RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides.</figcaption></figure>
+<figure><img src="../figures/rif_relationship.png" alt="RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides."><figcaption>RIF implies robustness and 2ε individual fairness (Theorem 1); robustness plus Lipschitz fairness implies only a relaxed RIF, which is where RB and UF behaviour hides.</figcaption></figure>
 
 <h2>RIFair</h2>
 <p>RIFair builds similar pairs by masking sensitive tokens, constructs a meaning-preserving perturbation space with a Generate–Filter pipeline, ranks tokens by occlusion saliency, and searches <em>decoupled</em> substitutions on the two sides of a pair to minimise a signed objective whose sign pattern selects the target quadrant.</p>
-<figure><img src="../figures/rif_generate_filter.png" alt="Generate–Filter: Step-1: an LLM proposes raw candidates of paraphrases/synonyms; Step-2 an NLI discriminator keeps the semantically imperceptible ones."><figcaption>Generate–Filter: an LLM proposes raw candidates, an NLI discriminator keeps the semantically imperceptible ones.</figcaption></figure>
+<figure><img src="../figures/rif_generate_filter.png" alt="Generate–Filter: Step 1, an LLM proposes raw candidate paraphrases and synonyms; Step 2, an NLI discriminator keeps the semantically imperceptible ones."><figcaption>Generate–Filter: an LLM proposes raw candidates, an NLI discriminator keeps the semantically imperceptible ones.</figcaption></figure>
 <figure class="eq"><img src="../figures/rif_eq_objective.png" alt="The unified objective. +1 minimises a term, −1 maximises it; (α_v, α_v′, β) = (+1, −1, −1) targets Robust Biased, (−1, −1, +1) Unrobust Fair, (−1, +1, −1) Unrobust Biased."></figure>
-<figure><img src="../figures/parameters_tables.png" alt="Hyperparameters for RIF violations."><figcaption>Hyperparameters for RIF violations, +1 minimises a term, −1 maximises it.</figcaption></figure>
+<figure><img src="../figures/parameters_tables.png" alt="Hyperparameters for the three RIF violations: +1 minimises a term, −1 maximises it."><figcaption>Hyperparameters for the three RIF violations: +1 minimises a term, −1 maximises it.</figcaption></figure>
 <figure><img src="../figures/rif_trajectories.png" alt="Prediction trajectories of a similar pair under the three objectives."><figcaption>Prediction trajectories of a similar pair under the three objectives.</figcaption></figure>
 
 <h2>Results</h2>
