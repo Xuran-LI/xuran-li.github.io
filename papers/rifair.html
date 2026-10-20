@@ -179,8 +179,9 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 
 <h2>RIFair</h2>
 <p>RIFair builds similar pairs by masking sensitive tokens, constructs a meaning-preserving perturbation space with a Generate–Filter pipeline, ranks tokens by occlusion saliency, and searches <em>decoupled</em> substitutions on the two sides of a pair to minimise a signed objective whose sign pattern selects the target quadrant.</p>
-<figure><img src="../figures/rif_generate_filter.png" alt="Generate–Filter: an LLM proposes raw candidates of paraphrases/synonyms, an NLI discriminator keeps the semantically imperceptible ones."><figcaption>Generate–Filter: an LLM proposes raw candidates, an NLI discriminator keeps the semantically imperceptible ones.</figcaption></figure>
-<figure class="eq"><img src="../figures/rif_eq_objective.png" alt="The unified objective. +1 minimises a term, −1 maximises it; (α_v, α_v′, β) = (+1, −1, −1) targets Robust Biased, (−1, −1, +1) Unrobust Fair, (−1, +1, −1) Unrobust Biased."><figcaption>The unified objective. +1 minimises a term, −1 maximises it; (α_v, α_v′, β) = (+1, −1, −1) targets Robust Biased, (−1, −1, +1) Unrobust Fair, (−1, +1, −1) Unrobust Biased.</figcaption></figure>
+<figure><img src="../figures/rif_generate_filter.png" alt="Generate–Filter: Step-1: an LLM proposes raw candidates of paraphrases/synonyms; Step-2 an NLI discriminator keeps the semantically imperceptible ones."><figcaption>Generate–Filter: an LLM proposes raw candidates, an NLI discriminator keeps the semantically imperceptible ones.</figcaption></figure>
+<figure class="eq"><img src="../figures/rif_eq_objective.png" alt="The unified objective. +1 minimises a term, −1 maximises it; (α_v, α_v′, β) = (+1, −1, −1) targets Robust Biased, (−1, −1, +1) Unrobust Fair, (−1, +1, −1) Unrobust Biased."></figure>
+<figure><img src="../figures/parameters_tables.png" alt="Hyperparameters for RIF violations."><figcaption>Hyperparameters for RIF violations, +1 minimises a term, −1 maximises it.</figcaption></figure>
 <figure><img src="../figures/rif_trajectories.png" alt="Prediction trajectories of a similar pair under the three objectives."><figcaption>Prediction trajectories of a similar pair under the three objectives.</figcaption></figure>
 
 <h2>Results</h2>
