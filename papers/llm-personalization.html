@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
-<title>LLM Personalization Evaluation</title>
-<meta name="description" content="Evaluating LLM personalization with audited semantic constraints.">
+<title>ConQual-Audit</title>
+<meta name="description" content="Neither over- nor under-constrained: evaluating LLM personalization under a constraint qualification audit.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
 :root{
@@ -137,7 +137,8 @@ figcaption{margin-top:10px;color:var(--soft);font-size:var(--fs-small);line-heig
 .eq img{border:none;background:#fff;border-radius:4px}
 .kv{width:100%;border-collapse:collapse;font-size:var(--fs-small);margin:12px 0 20px}
 .kv th,.kv td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-.kv th{font-weight:600;color:var(--muted)}
+.kv th{font-weight:600;color:var(--muted);border-bottom:2px solid var(--rule)}
+.kv td{text-align:left}
 .kv td.num{font-variant-numeric:tabular-nums;text-align:right}
 .tablewrap{overflow-x:auto}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--band);border:1px solid var(--rule);border-radius:3px;padding:0 5px}
@@ -164,27 +165,70 @@ pre{background:var(--band);border:1px solid var(--rule);border-radius:4px;paddin
 </div></header>
 <section class="paper-head"><div class="wrap">
   <a class="back" href="../index.html#publications">← All publications</a>
-  <h1>Evaluating LLM Personalization with Semantic Constraints</h1>
+  <h1>Neither Over- nor Under-Constrained: Evaluating LLM Personalization under a Constraint Qualification Audit</h1>
   <div class="authors"><span class=me>Xuran Li</span>, Guanqin Zhang, Imran Razzak, Hakim Hacid, Eleanna Kafeza, Hao Xue, Flora D. Salim</div>
-  <div class="venue">arXiv preprint arXiv:2606.16368 (2026) · ConQual-Audit: Neither Over- nor Under-Constrained, under review</div>
+  <div class="venue">ConQual-Audit · under review · preprint: arXiv:2606.16368 (2026)</div>
   <div class="buttons"><a class="btn primary" href="https://arxiv.org/abs/2606.16368">arXiv</a><a class="btn" href="https://github.com/Xuran-LI/ConQual-Audit">Code</a></div>
 </div></section>
 <section><div class="wrap prose">
-<p><strong>In one sentence.</strong> Evaluating whether an LLM personalised its answer correctly usually means either fragile surface matching against a reference or an expensive, uninterpretable LLM judge. We instead turn the user's preferences and the task reference into <em>semantic constraints</em>, qualify them so that they are neither over- nor under-specified, and verify each response against them with natural language inference.</p>
+<p><strong>In one sentence.</strong> LLM personalization means tailoring an LLM's output to both the task-grounded reference and the user's own preferences. <em>ConQual-Audit</em> evaluates it with a three-stage audit: (1) extract semantic constraints from the user profile and the task-grounded reference; (2) qualify the constraints by pruning unnecessary ones and recovering missing ones; (3) verify each candidate response against the audited constraints with natural language inference.</p>
 
-<h2>Where is the decision boundary for a valid personalised response?</h2>
-<figure><img src="../figures/cq_regions.png" alt="For a query and a user, the ellipse holds the truly valid responses; the coloured shape is what an evaluator accepts. Reference-based metrics and LLM judges draw the boundary in the wrong place; raw constraint sets are over- or under-constrained; audited constraints fit the ellipse."><figcaption>For a query and a user, the ellipse holds the truly valid responses; the coloured shape is what an evaluator accepts. Reference-based metrics and LLM judges draw the boundary in the wrong place; raw constraint sets are over- or under-constrained; audited constraints fit the ellipse.</figcaption></figure>
+<h2>Motivation: where is the decision boundary for a valid personalised response?</h2>
+<figure><img src="../figures/cq_regions.png" alt="Acceptance regions of four evaluation paradigms."><figcaption>Acceptance regions of four evaluation paradigms.</figcaption></figure>
+<p>For a query <code>q</code> and a user <code>u</code>, each box is the space of all possible responses <code>Ω<sub>q</sub></code>. The grey ellipse inside it, <code>𝒜<sup>⋆</sup><sub>q,u</sub></code>, holds the responses that are truly valid, and the coloured shape is the region an evaluator induces. Whatever the evaluator accepts outside the ellipse is a false acceptance; whatever it misses inside the ellipse is a false rejection.</p>
+<div class="tablewrap"><table class="kv">
+<thead><tr><th>Paradigm</th><th>Accepts a response when…</th><th>What goes wrong</th></tr></thead>
+<tbody>
+<tr><td><strong>(a)</strong> Reference-based metrics (BLEU, ROUGE, BERTScore, MoverScore)</td><td>it is similar enough to a human-written reference</td><td>Valid paraphrases fall outside the similarity balls, while a negated answer ("is not X") looks almost identical to the reference</td></tr>
+<tr><td><strong>(b)</strong> LLM-as-a-judge (GEMBA, PerSE)</td><td>the judge's score clears a threshold</td><td>The boundary is implicit and uncalibrated</td></tr>
+<tr><td><strong>(c)</strong> Constraint evaluation (FActScore, ExPerT, PREF)</td><td>it satisfies every generated constraint</td><td>Unnecessary constraints shrink the region (over-constrained: false rejections); missing constraints enlarge it (under-constrained: false acceptances)</td></tr>
+<tr><td><strong>(d)</strong> Audited constraints (ConQual-Audit)</td><td>it satisfies every qualified constraint</td><td>The audit removes duplicate and unnecessary constraints and adds the missing ones, so the region fits <code>𝒜<sup>⋆</sup></code></td></tr>
+</tbody></table></div>
 
-<h2>ConQual-Audit</h2>
-<p>The audit runs in three stages: construct preference constraints from the user history and answer constraints from the task reference; qualify them by removing duplicates, pruning unnecessary constraints and recovering missing ones; and verify candidate responses against the qualified set. Constraint coverage, response attribution and their harmonic mean summarise the result.</p>
+<h2>How ConQual-Audit works</h2>
 <figure><img src="../figures/cq_pipeline.png" alt="Evaluation pipelines; (d) is ConQual-Audit."><figcaption>Evaluation pipelines; (d) is ConQual-Audit.</figcaption></figure>
-<figure><img src="../figures/cq_case.png" alt="A PrefEval case: pruning one unnecessary answer constraint is what makes the negative response get rejected."><figcaption>A PrefEval case: pruning one unnecessary answer constraint is what makes the negative response get rejected.</figcaption></figure>
+<p>ConQual-Audit uses three roles — the generator <code>G</code>, the verifier <code>V</code> and the judge <code>J</code> — and runs in three stages:</p>
+<ul>
+<li><strong>Constraint construction.</strong> Generate preference constraints from the user's history and answer constraints from the task reference.</li>
+<li><strong>Constraint qualification (the audit).</strong> Remove duplicates, eliminate unnecessary constraints, and recover missing constraints.</li>
+<li><strong>Constraint verification.</strong> Evaluate the response against the audited constraints.</li>
+</ul>
+<p>The measurement reports constraint coverage <code>R</code> (the share of qualified constraints the response entails), response attribution <code>P</code> (the share of the response that is attributable to those constraints) and their harmonic mean:</p>
+<figure class="eq"><img src="../figures/cq_metrics.png" alt="Constraint coverage R, response attribution P and their harmonic mean F1."></figure>
+
+<h2>Case study</h2>
+<figure><a href="../figures/cq_case_full.png" target="_blank" rel="noopener"><img src="../figures/cq_case.png" alt="ConQual-Audit on one PrefEval query."></a><figcaption>ConQual-Audit on one PrefEval query (click the figure to open it at full size).</figcaption></figure>
+<p><strong>Preference:</strong> the user dislikes team-building activities that involve physical sports. <strong>Reference:</strong> non-physical alternatives such as problem-solving exercises or creative collaborations.</p>
+<ul>
+<li><strong>Construction</strong> — four constraints: <code>pc_1</code> no physical team-building; <code>ac_1</code> no physical sports; <code>ac_2</code> problem-solving exercises; <code>ac_3</code> creative collaborations.</li>
+<li><strong>Qualification</strong> — no duplicates; <code>ac_3</code> is pruned, because an answer without creative collaborations is still acceptable; no missing constraint.</li>
+<li><strong>Verification</strong> — with <code>pc_1</code>, <code>ac_1</code> and <code>ac_2</code>, the positive answer is accepted and the negative answer is rejected.</li>
+<li><strong>Without qualification</strong> — the negative answer satisfies <code>ac_2</code> and <code>ac_3</code> and is accepted, which is the wrong decision.</li>
+</ul>
 
 <h2>Results</h2>
-<p>Across PrefEval and LaMP, ConQual-Audit outperforms nine baselines (BLEU, ROUGE, BERTScore, MoverScore, GEMBA, PerSE, FActScore, ExPerT, PREF), reaching AUCs of 0.88 and 0.90 and the lowest false rate (0.21) on the leanest constraint sets. The audit is portable: plugging it into ExPerT and PREF shrinks their constraint sets and lowers their false rates. The semantic-constraint verifier (NLICV) agrees with human annotations, sorts model behaviour into personalization, generalization, sycophancy and failure, and runs up to 2100× faster than an LLM judge.</p>
+<p>Evaluators judge controlled positive responses (same meaning as the golden label) and negative responses (a different meaning). Across PrefEval and LaMP, ConQual-Audit outperforms nine baselines, attaining the top AUCs (0.88 and 0.90) and the lowest false rate (0.21) on the leanest constraint sets, at an amortisable audit cost. The constraint audit is also portable: integrating it into ExPerT and PREF revises their constraint sets into smaller, higher-quality ones and reduces their evaluation false rates.</p>
 
 <h2>Code</h2>
-<p><a href="https://github.com/Xuran-LI/ConQual-Audit">Xuran-LI/ConQual-Audit</a> contains the audit (<code>conqual/audit.py</code>), the PrefEval and LaMP benchmarks, the nine baselines, and the scripts that regenerate every table in the paper from saved results.</p>
+<p><a href="https://github.com/Xuran-LI/ConQual-Audit">Xuran-LI/ConQual-Audit</a> contains the audit, the PrefEval and LaMP-1/2/4 benchmarks, the nine baselines, and the scripts that regenerate every table in the paper from the saved results (no GPU needed for the tables).</p>
+<pre>conqual/audit.py        ConQual-Audit: construction, qualification, verification, R / P / F1
+benchmarks/             PrefEval and LaMP-1/2/4 test sets, prompts, and the build scripts
+baselines/              BLEU-4 / ROUGE-L, BERTScore / MoverScore, GEMBA, FActScore, ExPerT, PREF, PerSE
+experiments/            run_conqual.py (ConQual-Audit on a benchmark), audit_baselines.py (ExPerT / PREF audited by ConQual)
+tables/                 the paper's tables from the saved results
+data/prefeval/          the PrefEval test responses used in the paper</pre>
+<p>Setup is <code>pip install -r requirements.txt</code> (Python ≥ 3.10); <code>bash scripts/run_prefeval.sh cuda:0</code> and <code>bash scripts/run_lamp.sh cuda:0</code> reproduce every run and table. To score one response:</p>
+<pre>from benchmarks import prefeval
+from conqual import ConQualAudit
+from utils.llm import load_model
+
+tokenizer, model = load_model("Qwen/Qwen3-8B", "cuda:0")
+audit = ConQualAudit(tokenizer, model, prefeval.CONQUAL_PROMPTS)
+metrics, verification, qualified, constructed = audit.evaluate(
+    query, response, reference,
+    user_profile=[{"preference": "I dislike team-building activities that involve physical sports."}])
+print(metrics["R"], metrics["P"], metrics["f1_score"])</pre>
+<p>For many responses to the same query, call <code>audit.build_constraints(...)</code> once and <code>audit.verify_constraints(...)</code> for each response.</p>
 
 <h2>Citation</h2>
 <pre>@article{li2026evaluating,
